@@ -40,6 +40,12 @@ async function run() {
 
         });
 
+        app.post('/services', async (req, res) => {
+            const service = req.body;
+            const result = await serviceCollection.insertOne(service);
+            res.send(result);
+        })
+
         //review api
         app.get('/reviews', async (req, res) => {
 
@@ -70,14 +76,16 @@ async function run() {
             res.send(result);
         });
 
-        app.patch('/reviews/:id', async (req, res) => {
+
+        app.put('/reviews/:id', async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) };
             const review = req.body;
+            const option = { upsert: true };
             const updatedReview = {
                 $set: { review }
             }
-            const result = await reviewCollection.updateOne(filter, updatedReview);
+            const result = await reviewCollection.updateOne(filter, updatedReview, option);
             res.send(result);
 
         })
