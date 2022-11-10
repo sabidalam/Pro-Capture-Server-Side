@@ -102,7 +102,7 @@ async function run() {
             const result = reviewCollection.find(query);
             const review = await result.toArray();
             res.send(review);
-        })
+        });
 
         app.get('/reviews/:id', async (req, res) => {
             const id = req.params.id;
@@ -110,7 +110,6 @@ async function run() {
             const result = await reviewCollection.findOne(query);
             res.send(result);
         });
-
 
         app.patch('/reviews/:id', async (req, res) => {
             const id = req.params.id;
@@ -122,7 +121,7 @@ async function run() {
             const result = await reviewCollection.updateOne(filter, updatedReview);
             res.send(result);
 
-        })
+        });
 
         app.delete('/reviews/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
